@@ -12,6 +12,10 @@ public class ExamShape {
 		//l1.shape에 생성됨
 		System.out.println(l1);
 		
+		//Circle extends Shape
+		Shape c1 = new Circle(1,1,2);
+		System.out.println(c1);
+		
 		
 	}
 
