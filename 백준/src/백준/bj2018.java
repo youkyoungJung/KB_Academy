@@ -4,7 +4,7 @@ public class bj2018 {
 
 	public static void main(String[] args) {
 			
-		while(end_index != N) {}
+		//while(end_index != N) {}
 	}
 
 }
