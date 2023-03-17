@@ -16,7 +16,8 @@ public class 연속된숫자의순열_재귀 {
     }
     // 순열
     private static void permutation(int cnt) {
-        if (cnt == m) {
+        //종료 조건 검사
+    	if (cnt == m) {
             System.out.println(Arrays.toString(arr));
             return;
         }
@@ -24,6 +25,7 @@ public class 연속된숫자의순열_재귀 {
             if (!visited[i]) {
                 visited[i] = true;
                 arr[cnt] = i;
+                //같은메서드 호출
                 permutation(cnt + 1);
                 visited[i] = false;
             }
