@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>my_js3.html</title>
+<script type="text/javascript">
+	function changeColor(){
+		document.querySelector("#result").style.background="yellow"
+	}
+	window.onload = function() {
+		//웹브라우저가 웹페이지를 모두 로딩하면 실행하는 함수
+		var btn = document.querySelector("#ok_btn")
+		btn.onclick = changeColor;
+		console.log(btn)
+
+	}
+</script>
+
+</head>
+
+<body>
+	<h1>이벤트</h1>
+	<!-- 이벤트 핸들러가 false 를 반환하면 요소 기본 동작이 취소된다 -->
+	<a href="#">Green</a>
+	<a href="#">Orange</a>
+	<a href="#">Purple</a>
+
+	<button id="ok_btn">OK</button>
+	<button id="cancel_bnt">Cancel</button>
+
+	<div id="result" style="width: 300px; height: 300px;"></div>
+
+
+</body>
+</html>

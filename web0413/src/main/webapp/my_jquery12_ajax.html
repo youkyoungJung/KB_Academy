@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>my_jquery02.html</title>
+<script src="https://code.jquery.com/jquery-3.6.4.js"
+	integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
+	crossorigin="anonymous"></script>
+<script type="text/javascript">
+	$(function(){
+		$("#server_time").click(function(){
+			var options ={
+				url:"./jsp/server_time.jsp",
+				success: function(data){
+					$("#result").html(data)
+				}
+			}
+			$.ajax(options)
+		})
+	})
+
+</script>	
+</head>
+<body>
+	<div>
+		<button id="server_time"> 서버시간 </button>
+		<div id="result"></button>
+	</div>
+</body>
+</html>

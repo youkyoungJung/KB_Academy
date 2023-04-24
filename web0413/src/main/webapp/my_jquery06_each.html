@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>my_jquery02.html</title>
+<script src="https://code.jquery.com/jquery-3.6.4.js"
+	integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
+	crossorigin="anonymous"></script>
+<script type="text/javascript">
+	var arr = [10, 20, 30]
+	var t = 0
+	$.each(arr, function(index, item){
+		console.log(index+", "+item)
+		t += item
+	})
+	$("#result").html(t)
+</script>	
+</head>
+<body>
+	<div id ="result">
+	</div>
+</body>
+</html>

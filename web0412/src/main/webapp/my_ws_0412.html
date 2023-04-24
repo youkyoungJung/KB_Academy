@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>숫자맞추기 게임 v0.2</title>
+<style>
+#wrapper {
+	width: 540px;
+	margin: 10px auto;
+}
+
+#buttons>button {
+	width: 50px;
+	height: 50px;
+}
+</style>
+
+<script src="https://code.jquery.com/jquery-3.6.4.js"
+	integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
+	crossorigin="anonymous"></script>
+<script type="text/javascript">
+	//난수 - 금광 생성
+	var com_x = Math.random() * 10 + 1
+	com_x = Math.floor(com_x)
+	var com_y = Math.random() * 10 + 1
+	com_y = Math.floor(com_y)
+
+	function reset_game() {
+		var com_num = Math.random() * 100 + 1; //0.0~100.9999
+		$("#buttons>button").attr("disabled", false)
+	}
+
+	function check_num() {
+		// this -> 이벤트 소스(이벤트를 발생시킨 태그)
+		/* alert(this.innerHTML) 자바스크립트 코드
+		alert($(this).html()) jquery 코드 */
+		var num = this.innerHTML
+		num = parseInt(num) - 1 //1-100으로 좌표계산 까다로움, 0-99로 계산
+		var x = Math.floor(num / 10) + 1
+		var y = num % 10 + 1
+		var pita = Math.sqrt(Math.pow(x - com_x, 2) + Math.pow(y - com_y, 2))
+		pita = Math.round(dist)
+
+		var msg = ""
+		if (pita != 0)
+			msg = "틀렸습니다"
+		else
+			msg = "정답입니다"
+
+		$('#result').html(msg + " : " + dist)
+		$(this).attr("disabled", true)
+
+	}
+
+	$(function() {
+		//버튼 100개 생성, 추가
+		var buttons = $("#buttons")
+		for (let i = 1; i <= 100; i++) {
+			buttons.append("<button>" + i + "</button>")
+		}
+
+		//버튼 100개에 클릭 이벤트 등록
+		$("#buttons>button").click(check_num)
+
+	})
+</script>
+</head>
+<body>
+	<div id="wrapper">
+		<h1>금광찾기 게임만들기</h1>
+		<p>내 금광 찾아.</p>
+		<div id="result"></div>
+		<div id="buttons"></div>
+	</div>
+
+</body>
+</html>

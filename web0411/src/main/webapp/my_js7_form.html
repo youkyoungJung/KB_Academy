@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<script>
+	function check_form() {
+		var mid = document.querySelector("#mid")
+		if(mid.value.trim().length == 0){
+			alert("아이디를 입력하세요")
+			return false;
+		}
+		var pwd = document.querySelector("#pwd")
+		if(pwd.value.length == 0){
+			alert("비밀번호를 입력하세요")
+			return false;
+		}
+		return true;
+	}
+</script>
+</head>
+<body>
+	<h1>폼 이벤트</h1>
+	<h2>로그인</h2>
+	<form id="login_form" onsubmit="return check_form(); "
+		action="./jsp/login.jsp" method="post">
+		로그인 아이디: <input id="mid" type="text" name="mid"> 
+		<br> 
+		비밀번호: <input id="pwd" type="password" name="pwd"> 
+		<br> <input type="submit" value="로 그 인">
+
+	</form>
+</body>
+</html>

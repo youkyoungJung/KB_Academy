@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+
+<style type="text/css">
+#wrapper {
+	width: 400px;
+	margin: 10px auto;
+}
+
+</style>
+
+<script src="https://code.jquery.com/jquery-3.6.4.js"
+	integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
+	crossorigin="anonymous"></script>
+<script type="text/javascript">
+
+	//난수생성(1~100)
+	var com_num = Math.random() * 100 + 1; //0.0~100.9999
+	com_num = Math.floor(com_num)
+
+	function reset_game() {
+		com_num = Math.random() * 100 + 1; //0.0~100.9999
+		com_num = Math.floor(com_num)
+	}
+
+	//1. 이벤트 등록
+	$(function() { //HTML 코드가 로딩될 때까지 실행 지연
+		/* 		alert($("p").css("color"))
+		 //$("p").css("color", "red")
+		 $("p").css(//여러 css값을 설정하기
+		 {"background" : "cyan", "border":"1px red dashed"}		
+		 )
+		 }) */
+		//이벤트 등록
+		$("#check_num").click(function() {
+			//입력값과 컴난수랑 비교
+			var num = $("#num").val() // 입력값 - 문자
+			num = parseInt(num) //문자를 숫자로 변환
+
+			var msg = ""
+			if (com_num < num)
+				msg = "낮춰주세요"
+			else if (com_num > num)
+				msg = "높여주세요"
+			else
+				msg = "정답입니다"
+
+			$("#result").html(num + " : " + msg)
+			//입력 숫자 삭제
+			$("#num").val("")
+
+			if (com_num == num) {
+				reset_game(); //게임초기화
+				$("#result").html($("#result").html() + "<br>게임이 초기화 되었습니다.")
+			}
+
+			return false;//전송중지
+		})
+
+	})
+</script>
+
+</head>
+<body>
+	<div id="wrapper">
+		<h1>숫자맞추기 게임</h1>
+		<p>1~100사이 컴퓨터가 정한 숫자를 맞춰 보세요~</p>
+		<p>1~100사이 컴퓨터가 정한 숫자를 맞춰 보세요~</p>
+		<form action="">
+			<label> 숫자 입력: <input id="num" type=number>
+				<button id="check_num">정답확인</button>
+			</label>
+		</form>
+		<div id="result"></div>
+	</div>
+</body>
+</html>

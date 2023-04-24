@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+<meta charset="UTF-8">
+<title>minefind.html</title>
+<style>
+#top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#buttons button {
+    width: 50px;
+    height: 50px;
+}
+</style>
+
+</head>
+
+<body>
+
+    <div id="top">
+
+        <fieldset>
+            <legend>난이도</legend>
+            <input type="radio" id="beginner" name="level" checked> <label
+                for="beginner">초급</label> <input type="radio" id="intermediate"
+                name="level"> <label for="intermediate">중급</label>
+        </fieldset>
+
+        <div id="try"></div>
+        <div id="remain"></div>
+    </div>
+
+    <button id="start">시작</button>
+    <div id="buttons"></div>
+
+    <script src=" https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+    <script>
+        $(function () {
+            // 초급과 중급에 대한 광산 수
+
+            var beginnerMines = 7;
+            var intermediateMines = 12;
+            var mines = beginnerMines;
+            var trynum = 0;
+            var bombs = [];
+            var arr;
+            var dr = [-1, 1, 0, 0, 1, 1, -1, -1]
+            var dc = [0, 0, -1, 1, 1, -1, 1, -1]
+            // 라디오 버튼 그룹에 대한 이벤트 처리
+
+
+            $("input[name='level']").click(function () {
+
+                if ($("#beginner").is(":checked")) {
+                    mines = beginnerMines;
+                }
+                else if ($("#intermediate").is(":checked")) {
+                    mines = intermediateMines;
+                }
+                $("#remain").html("남은 지뢰수: " + mines);
+            });
+
+            // 페이지가 처음 로드될 때 "초급"이 선택된 상태로 설정
+
+            $("#remain").html("남은 지뢰수: " + mines);
+            $("#try").html("시도횟수: " + trynum);
+
+
+            function check_num() {
+
+                var v = $(this).attr("data-num");
+
+                v -= 1;
+                console.log('v=' + v)
+
+                var nr = Math.floor(v / arr.length)
+                var nc = (v % arr.length)
+
+
+
+                console.log('nr=' + nr)
+                console.log('nc=' + nc)
+
+                $(this).html(arr[nr][nc]);
+
+
+                if (bombs.indexOf(v) != -1) {
+                    $(this).html('!!!');
+                    mines--;
+                    console.log('minenum' + mines)
+
+                    if (mines == 0) {
+
+                        alert('지뢰를 모두 찾았습니다')
+                        $("#buttons button").attr("disabled", true);
+
+                    }
+                    $("#remain").html("남은 지뢰수: " + mines);
+
+                }
+
+                $(this).attr("disabled", true)
+
+                trynum++;
+                $("#try").html("시도횟수: " + trynum);
+
+
+            }
+
+            $("#start").click(
+                function () {
+
+                    $("#buttons .row ").remove(); // 전체 버튼 삭제
+                    trynum = 0
+                    $("#try").html("시도횟수: " + trynum);
+
+                    var totalButtons = 10;
+
+                    if ($("#beginner").is(":checked")) {
+
+
+                        arr = Array(totalButtons).fill().map(() => Array(totalButtons).fill(0));
+
+
+                        $("#buttons button").attr("disabled", false)
+                        // 배열 초기화
+                        bombs = [];
+
+                        var cnt = 0;
+                        while (bombs.length < 7) {
+
+                            var v = Math.floor(Math.random()* 100 + 1);
+
+
+                            if (bombs.indexOf(v) === -1
+                            ) { // 배열에 중복되지 않는 수인 경우
+
+                                bombs.push(v); // 배열에 추가
+                                var r = Math.floor(v / totalButtons);
+                                var c = v % totalButtons;
+
+
+
+                                for (var i = 0; i < 8; i++) {
+                                    var nr = r + dr[i];
+                                    var nc = c + dc[i];
+                                    if (nr < 0 || nc < 0 || nr >= totalButtons || nc >= totalButtons) continue;
+
+                                    arr[nr][nc] = arr[nr][nc] + 1;
+                                }
+
+                            }
+
+                        }
+
+
+
+                        for (var i = 0; i < bombs.length; i++)
+                            console.log(bombs[i]);
+
+
+                        for (var i = 1; i <= totalButtons; i++) {
+                            var row = $("<div class='row'></div>");
+                            $("#buttons").append(row);
+
+                            for (var j = 1; j <= totalButtons; j++) {
+                                row.append("<button  data-num='" + (((i - 1)  (totalButtons)) + j) + "'>" + "?" + "</button>");
+
+                            }
+
+                        }
+
+                    }
+
+                    else if ($("#intermediate").is(":checked")) {
+                        totalButtons = 15;
+                        $("#buttons button").attr("disabled", false)
+
+                        // 배열 초기화
+                        bombs = [];
+
+
+                        arr = Array(totalButtons).fill().map(() => Array(totalButtons).fill(0));
+
+
+                        while (bombs.length < 12) {
+
+                            var v = Math.floor(Math.random()* 225 + 1);
+
+
+                            if (bombs.indexOf(v) == -1) { // 배열에 중복되지 않는 수인 경우
+
+                                bombs.push(v); // 배열에 추가
+
+                                var r = Math.floor(v / totalButtons);
+                                var c = v % (totalButtons);
+
+
+                                for (var i = 0; i < 8; i++) {
+                                    var nr = r + dr[i];
+                                    var nc = c + dc[i];
+                                    if (nr < 0 || nc < 0 || nr >= totalButtons || nc >= totalButtons) continue;
+
+                                    arr[nr][nc] = arr[nr][nc] + 1;
+                                }
+
+                            }
+
+                        }
+
+                        for (var i = 0; i < bombs.length; i++)
+                            console.log(bombs[i]);
+
+                        for (var i = 1; i <= totalButtons; i++) {
+                            var row = $("<div class='row'></div>");
+                            $("#buttons").append(row);
+                            for (var j = 1; j <= totalButtons; j++) {
+                                row.append("<button  data-num='" + (((i - 1)  (totalButtons)) + j) + "'>" + "?" + "</button>");
+
+                            }
+
+                        }
+
+                    }
+                    $("#buttons").off()
+                    $("#buttons").on("click", "button", check_num)
+
+                })
+
+
+        });
+    </script>
+</body>
+
+</html>

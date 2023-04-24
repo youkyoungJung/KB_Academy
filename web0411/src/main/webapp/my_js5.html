@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>my_js.html</title>
+</head>
+<body>
+
+	<button id="ok">OK</button>
+	<button id="cancel">Cancel</button>
+	<div id="result"></div>
+
+	<script type="text/javascript">
+		function ok_click() {
+			var r = document.querySelector("#result")
+			r.innerHTML = "<img src='images/logo.jpg'>"
+		}
+		var ok = document.querySelector('#ok')
+		ok.onclick = ok_click;
+
+	</script>
+</body>
+</html>

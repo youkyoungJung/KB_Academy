@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset = "UTF-8">
+<title>my_jquery_10</title>
+<style>
+a {
+	margin: 5px;
+	padding: 5px;
+	border: 3px solid black
+}
+</style>
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script>
+	$(function(){
+		$("#all_check").change(function(){
+/* 			if(this.checked){//선택상태이면
+				$("#check_item").children().attr("checked", true)
+			}else{
+				$("#check_item").children().attr("checked", false)
+			} */
+			//jquery 1.8부터 disabled. selected, checked 속성은 prop() 사용 권장
+			$("#check_item>input").prop("checked", this.checked)
+		})
+	})
+</script>
+</head>
+<body>
+	<input type="checkbox" id="all_check">
+	<label> ALL </label>
+	
+	<div id = "check_item">
+		<input type="checkbox">
+		<label> A option </label>
+		<input type="checkbox">
+		<label> B option </label>
+		<input type="checkbox">
+		<label> C option </label>
+	</div>
+</body>
+
+</html>

@@ -1,0 +1,275 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+#wrapper {
+	width: 540px;
+	margin: 10px auto;
+}
+
+#buttons>button {
+	width: 50px;
+	height: 50px;
+}
+</style>
+<script src="https://code.jquery.com/jquery-3.6.4.js"
+	integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
+	crossorigin="anonymous"></script>
+</head>
+<body>
+	<input type="radio" name="chk_info" value="basic" checked="checked">초급
+	<input type="radio" name="chk_info" value="middle">중급
+
+	<div id="wrapper">
+		<div id="result_cnt">시도횟수:</div>
+		<div id="result_not_found">남은지뢰수:</div>
+	</div>
+	<!-- 버튼 위치 -->
+	<div id="buttons"></div>
+
+	<script type="text/javascript">
+		/*
+		초기버튼 : 100
+		폭탄 : -1
+		버튼 폭파 : 200
+		주변 폭탄 : 300
+		 */
+		//init 시작하자 마자 on
+
+$(document).ready(function(){
+
+	var arr = new Array();
+	var openCount=0;
+	var mineCount=0;
+	var mine=-1; //마인
+	var isInit=true;
+	var isConfirm=false; //마인인지여부
+	
+	var INIT_BUTTON=100; //처음빈공간
+	var CLEAR_BUTTON=200; //버튼눌렸을떄 지뢰가없는상태
+	var AROUND_BUTTON=300;//주변폭탄개수
+	var MINE_MAP_ROW=10; //가로크
+	var MINE_MAP_COL=10; //세로크기
+	var MINE_NUM=7;
+	
+	var try_cnt = 0
+	var not_found_num = 7
+
+	initPrint();//폭탄 초기화
+	setMine()//폭탄셋팅
+	mineMapPrint(); //화면출력
+
+	//middle
+	$("input:radio[name=chk_info]").click(function() {
+			var listVar = $('input[name=chk_info]:checked').val();
+			console.log(listVar)
+
+			if (listVar == "middle") {
+				
+				MINE_MAP_ROW=15; //가로크
+				MINE_MAP_COL=15; //세로크기
+				MINE_NUM=10;		
+				
+				try_cnt = 0
+				not_found_num =10
+				
+				initPrint();//폭탄 초기화
+				setMine()//폭탄셋팅
+				mineMapPrint(); //화면출력
+			}else{
+				MINE_MAP_ROW=10; //가로크
+				MINE_MAP_COL=10; //세로크기
+				MINE_NUM=7;		
+				
+				try_cnt = 0
+				not_found_num =7
+				
+				initPrint();//폭탄 초기화
+				setMine()//폭탄셋팅
+				mineMapPrint(); //화면출력
+			}
+		})
+		
+
+	/**
+	 * @TODO 초기에 배열 기본버튼으로 셋팅
+	 */
+	function initPrint(){
+		for(var i=0;i<MINE_MAP_COL;i++){
+			arr[i]=new Array();
+			for(var j=0;j<MINE_MAP_ROW;j++){
+				arr[i][j]=INIT_BUTTON;
+			}
+		} 
+	
+	}
+
+
+	/**
+	 * @TODO 랜덤으로 마인생성
+	 * @TODO 배열에 마인 -1로 마인셋팅
+	 */
+	function setMine() {
+ 	  // x축
+ 	  var arrayX = [0,1,2,3,4,5,6,7,8,9];
+ 	  // y축
+ 	  var arrayY = [0,1,2,3,4,5,6,7,8,9];
+  	 // x축과 y축 섞기
+  	 for(var i=0;i<MINE_NUM;i++) {
+     	 randNum1 = Math.floor(Math.random()*MINE_NUM);
+     	 randNum2 = Math.floor(Math.random()*MINE_NUM);
+     	 randNum3 = Math.floor(Math.random()*MINE_NUM);
+     	 randNum4 = Math.floor(Math.random()*MINE_NUM);
+
+    	  [arrayX[randNum1],arrayX[randNum2]] = [arrayX[randNum2],arrayX[randNum1]]; //템프를이용 서로 값변경
+    	  [arrayY[randNum3],arrayY[randNum4]] = [arrayY[randNum4],arrayY[randNum3]];
+ 	  }
+   		console.log(arrayX);
+  		console.log(arrayY);
+ 
+   		for(var i=0;i<MINE_NUM;i++) {
+	   		arr[arrayX[i]][arrayY[i]] = mine; 
+   		}
+
+	}
+
+
+	/**
+	 * @TODO 배열의 값으로 버튼판단하여 화면에 렌더링부분
+	 */
+	function mineMapPrint () {
+		$("#result_not_found").html("남은지뢰: " + not_found_num);
+		$("#result_cnt").html("시도횟수: " + try_cnt);
+
+		var str="";
+		for(var i=0;i<MINE_MAP_COL;i++){
+			for(var j=0;j<MINE_MAP_ROW;j++){
+			
+				if(arr[i][j]==INIT_BUTTON){
+					str+="<Button tpye='button' val=''  locationX='"+i+"'locationY='"+j+"'>?</button>";
+				}else if(arr[i][j]==mine){//폭탄
+					str+="<Button tpye='button' val=''  locationX='"+i+"'locationY='"+j+"'>폭</button>";
+				}else if(arr[i][j]==CLEAR_BUTTON){
+					str+="<Button tpye='button' val=''  locationX='"+i+"'locationY='"+j+"'></button>";
+				}else{
+					str+="<Button tpye='button' val=''  locationX='"+i+"'locationY='"+j+"''>"+arr[i][j]+"</button>"; //주변폭탄 개수
+				}
+			
+			}
+			str+="<br/>";
+		}
+		$("#buttons").html(str);
+	
+	}
+
+
+	/**
+	 * @TODO 블럭주변 마인개수 확인로직
+	 */
+	
+	function mineCheck(x,y){ //주변폭탄
+		var mine=0;
+
+		if(isMine(x-1,y-1)) mine++;
+		if(isMine(x,y-1)) mine++;
+		if(isMine(x+1,y-1)) mine++;
+		if(isMine(x-1,y)) mine++;
+		if(isMine(x+1,y)) mine++;
+		if(isMine(x-1,y+1)) mine++;
+		if(isMine(x,y+1)) mine++;
+		if(isMine(x+1,y+1)) mine++;
+	
+		return mine;
+	}
+	
+	/**
+	 * @TODO 주변에 마인체크로직
+	 */
+	function isMine(x,y){
+		if(x<0 || x>= MINE_MAP_COL || y<0 || y>= MINE_MAP_ROW) return false;
+		return arr[x][y] == mine ? true:false; 
+	
+	}
+	
+	/**
+	 * @TODO 마인이 아닌경우 이쪽로직
+	 * @TODO 마인이 없을경우 재귀함수 발동
+	 * @TODO 마인이 주변 마인있는경우 정지
+	 */
+	function fillSpace(x, y, INIT_BUTTON, CLEAR_BUTTON){ //재귀함수를 통한 빈블럭 격파 및 주변 마인체크
+		var aroundMine=mineCheck(x,y);  //주변마인체크
+		
+		if(x<0 || x>= MINE_MAP_COL || y<0 || y>= MINE_MAP_ROW){ 
+			return 0; //예외처리
+		}else if(arr[x][y] != INIT_BUTTON){ 
+			return 0; //예외처리
+		}else if(aroundMine!=0){                 //주변에 마인있으면 재귀함수 말고 주변 마인수 화면출력
+			arr[x][y]=aroundMine;
+			openCount++;
+			
+			return 0;
+		}else{
+	 		 arr[x][y] = CLEAR_BUTTON;
+	 		openCount++;
+	 	 	return fillSpace(x-1,y,INIT_BUTTON,CLEAR_BUTTON)+fillSpace(x,y-1,INIT_BUTTON,CLEAR_BUTTON)
+	 	 	+fillSpace(x+1,y,INIT_BUTTON,CLEAR_BUTTON)+fillSpace(x,y+1,INIT_BUTTON,CLEAR_BUTTON);
+		}
+
+	} 
+
+	/**
+	* @TODO 마우스 좌클릭
+	 * @TODO 마인있는지 확인
+	 */
+	
+	function mineConfirm(x,y,callback){ //마우스 좌클릭
+		fillSpace(x,y,INIT_BUTTON,CLEAR_BUTTON);
+ 		callback();
+	}
+
+	//버튼 체크부분
+
+	$("#result_not_found").html("남은지뢰: " + not_found_num);
+
+	$("#buttons").on("click","button",function(){
+		try_cnt++;
+		$("#result_cnt").html("시도횟수: " + try_cnt);
+		var locationX=$(this).attr("locationX");
+		var locationY=$(this).attr("locationY");
+		
+	 	if(arr[locationX][locationY]==mine){ //이게 마인이 맞으면 끝나는거니까 (겜종료)
+			for(var x=0;x<MINE_MAP_COL;x++){ //전체마인이랑 주변 체크해서 겜끝내는부분
+				 for(var y=0;y<MINE_MAP_ROW;y++){
+					if(arr[x][y]!=-1){
+						 arr[x][y]=mineCheck(x,y);
+						 $(this).attr("disabled", true)
+					 }
+			 	}
+		 	}
+			not_found_num--;
+			alert("지뢰 맞아!!!");
+			$("#result_not_found").html("남은지뢰: " + not_found_num);
+			
+	 	}else{
+			mineConfirm(parseInt(locationX),parseInt(locationY),function() 
+					{
+						$("#result_not_found").html("남은지뢰: " + not_found_num);
+
+						mineMapPrint();
+						if(not_found_num == 0){
+							alert("지뢰 다찾음!!!");
+						}
+					});
+	 	}
+
+	});
+	
+	
+	
+})	
+	</script>
+</body>
+</html>

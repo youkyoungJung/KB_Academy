@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>my_jquery03.html</title>
+<script src="https://code.jquery.com/jquery-3.6.4.js"
+	integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
+	crossorigin="anonymous"></script>
+
+<script type="text/javascript">
+	
+	setInterval(function(){
+		var val = $("select > option:selected").val()
+		console.log(val)
+	}, 1000)
+</script>
+</head>
+<body>
+		<h1>요즘 좋은 가수</h1>
+		<select>
+			<option>뉴진스</option>
+			<option>아이유</option>
+			<option>지수</option>
+			<option>아이브</option>
+		</select>
+
+</body>
+</html>

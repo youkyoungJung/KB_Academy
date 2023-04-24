@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script src="https://code.jquery.com/jquery-3.6.4.js"
+	integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
+	crossorigin="anonymous"></script>
+<script type="text/javascript">
+	$(function() {
+		$("#all_check").change(function() {
+			//jquery 1.8부터 disabled, selected, checked속성은 prop()사용권장
+			$("#check_item>input").prop("checked", this.checked)
+
+		})
+
+		 $("#num1").click(function() {
+		 var checked = $("checkbox").is(':checked')
+		 if(checked){
+		 console.log("checked")
+		 }
+		 //var tr = $(this);
+		 var td = $(this);
+		 var p = td.eq(2).text();
+		
+		 console.log(""+p.text())
+		
+		 })
+		
+		 /* 
+
+		 $("#num2").click(function() {
+		 //var tr = $(this);
+		 var td = $(this);
+		 var p = td.eq(2).text();
+		 p = parseInt(p)
+		
+		 console.log(""+td.text())
+		
+		 }) */
+
+	})
+
+/* 	$(checkbox.each(function(index) {
+
+		var tr = $(this);
+		var td = tr.children();
+
+		var p = td.eq(2).text()
+		var q = $("#cnt").val()
+
+		var total = 0
+		var checked = $("checkbox").is(':checked')
+
+		console.log(checked)
+
+		if (checked) {
+			total += p * q
+			console.log(p)
+		}
+	})) */
+	//$("#total").html("" + total)
+</script>
+
+<title>my_jquery10_checkbox.html</title>
+</head>
+<body>
+	<input type="checkbox" id="all_check">
+	<label>All</label>
+
+	<table>
+		<tr>
+			<th>선택</th>
+			<th>제품명</th>
+			<th>가격</th>
+			<th>수량</th>
+		</tr>
+		<tr>
+			<td><input type="checkbox" id="num1"></td>
+			<td>냉장고</td>
+			<td>3,000,000</td>
+			<td><input type="number" value="1" id="cnt"></td>
+		</tr>
+		<tr>
+			<td><input type="checkbox" id="num2"></td>
+			<td>세탁기</td>
+			<td>1,000,000</td>
+			<td><input type="number" value="1" id="cnt2"></td>
+		</tr>
+		<tr>
+			<td>총액</td>
+			<td colspan="3" id="total"></td>
+		</tr>
+	</table>
+
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset = "UTF-8">
+<style>
+a {
+	margin: 5px;
+	padding: 5px;
+	border: 3px solid black
+}
+</style>
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script>
+	$(document).ready(function() {
+		$("a").click(function(event) {
+			$(this).css("background", "blue");
+			alert("이동 막기");
+			event.preventDefault(); //이동이나 전송 등 기본동작 취소
+			event.stopPropagation();
+		});
+		$("h1").bind("click", function() {
+			alert("연쇄 작동");
+		});
+	});
+</script>
+</head>
+<body>
+	<h1>
+		<a href="http://www.google.com">구글로 이동</a>
+	</h1>
+</body>
+
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>my_js01.html</title>
+</head>
+<body>
+
+<!-- ok누르면 1증가, cancel 누르면 1감소 -->
+	<button id="ok" data-num="1">OK</button>
+	<button id="cancel" data-num="-1">Cancel</button>
+	<div id="result"></div>
+
+	<script type="text/javascript">
+		function ok_click(event) {
+			var r = document.querySelector("#result")
+			r.innerHTML = this.innerHTML
+			//r.innerHTML = event.target.innerHTML
+		}
+		var ok = document.querySelector('#ok')
+		ok.onclick = ok_click;
+		var buttons = document.querySelectorAll("button")
+		//alert(buttons.length)//노드 리스트
+		for (let i = 0; i < buttons.length; i++) {
+			console.log(buttons[i].tagName)
+			console.log(buttons[i].getAttribute("id"))
+			buttons[i].onclick = ok_click
+		}
+	</script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>my_js6_dom.html</title>
+</head>
+<body>
+
+
+	<button onClick="show_img()" id="ok">OK</button>
+	<button id="cancel">CANCEL</button>
+	<div id="result"></div>
+
+	<script type="text/javascript">
+		function show_img(){
+			var r = document.querySelector("#ok").onclick = function() {
+				document.querySelector("#result").innerHTML+="<img src='./images/logo.jpg'>"
+			}
+		}
+	/* 		document.querySelector("#ok").onclick = function() {
+			document.querySelector("#result").innerHTML="<img src='./images/logo.jpg'>"
+		} */
+		
+	</script>
+</body>
+</html>

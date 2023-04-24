@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<style>
+#wrapper {
+	width: 540px;
+	margin: 10px auto;
+}
+
+#buttons>button {
+	width: 50px;
+	height: 50px;
+}
+</style>
+
+<script src="https://code.jquery.com/jquery-3.6.4.js"
+	integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
+	crossorigin="anonymous"></script>
+<script type="text/javascript">
+	//이벤트 등록
+	//지뢰생성
+	function pickNum(){
+/* 		var numbers=[];
+		var pickNumbers = 7;
+		
+		for(insertCur = 0; insertCur < pickNumbers; insertCur++){
+			 numbers[insertCur] = Math.floor(Math.random() * 100) + 1;
+		}
+		//중복검사
+		for(searchCur = 0; searchCur < insertCur; searchCur ++){
+            if(numbers[insertCur] == numbers[searchCur]){
+                insertCur--; // insertCur를 앞으로 민다
+                break; // 다음 것을 검색할 필요가 없으므로 중복검사 반복을 나갑니다.
+            }
+        } */
+		
+	}
+
+	function check_bomb_basic(){
+		var num = this.innerHTML
+		num = parseInt(num)
+		num -= 1
+		var uy = Math.floor(num/10)+1
+		var ux = num %10 +1
+		console.log("check_button"+ux+","+uy)
+		
+		$(this).attr("disabled", true)
+	}
+	
+	//init함수
+	$(function() { //HTML 코드가 로딩될 때까지 실행 지연
+		//init-check-basic
+		var buttons = $("#buttons")
+		for (let i = 1; i <= 100; i++) {
+			buttons.append("<button>" + "?" + "</button>")
+		}
+		$("input:radio[name=chk_info]").click(function() {
+			var listVar = $('input[name=chk_info]:checked').val();
+			console.log(listVar)
+
+			$("#buttons").empty()
+			if (listVar == "middle") {
+				var buttons = $("#buttons")
+				for (let i = 1; i <= 225; i++) {
+					buttons.append("<button>" + "?" + "</button>")
+					if(i % 15 == 0){
+						
+					}
+				}
+			} else {
+				var buttons = $("#buttons")
+				for (let i = 1; i <= 100; i++) {
+					buttons.append("<button>" + "?" + "</button>")
+				}
+			}
+
+		})
+		 //버튼 100개에 클릭 이벤트 등록
+        $("#buttons>button").click(check_bomb_basic)
+
+	})
+</script>
+</head>
+<body>
+	<input type="radio" name="chk_info" value="basic" checked="checked">초급
+	<input type="radio" name="chk_info" value="middle">중급
+
+	<div id="wrapper">
+		<div id="result_cnt">
+			시도횟수:
+			</button>
+			<div id="result_not_found">
+				남은지뢰수:
+				</button>
+			</div>
+			<div id="buttons"></div>
+		</div>
+</body>
+</html>

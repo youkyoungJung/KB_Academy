@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>금광찾기 v0.1</title>
+<style>
+#wrapper {
+	width: 540px;
+	margin: 10px auto;
+}
+
+#buttons>button {
+	width: 50px;
+	height: 50px;
+}
+</style>
+
+<script src="https://code.jquery.com/jquery-3.6.4.js"
+	integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
+	crossorigin="anonymous"></script>
+<script type="text/javascript">
+	//난수 생성(1~100)
+	var comx = Math.random() * 10 + 1;//1.0~10.99999
+	comx = Math.floor(comx) //소수이하버림
+	var comy = Math.random() * 10 + 1;//1.0~10.99999
+	comy = Math.floor(comy) //소수이하버림
+	console.log(comx + "," + comy)
+
+	function reset_game() {
+		//버튼을 초기화 - (1)몽땅지우고 새로등록
+		//$("#buttons>button").remove() //버튼들을 하나씩 삭제
+		/* $("#buttons").empty() //buttons내 모든 노드 삭제
+		var buttons = $("#buttons") //버튼 100개 추가
+		for(let i=1; i<=100; i++){
+			buttons.append("<button>"+i+"</button>")
+		}
+		//버튼 100개에 클릭 이벤트 등록
+		$("#buttons>button").click( check_num ) */
+
+		// (2)전체버튼을 활성화
+		$("#buttons>button").attr("disabled", false)
+	}
+
+	function check_gold() {
+		var num = this.innerHTML //선택한 버튼의 숫자
+		num = parseInt(num) //문자를 숫자로 변환
+		num -= 1 // 1-100으로 좌표계산이 까다로움, 0~99로 좌표계산이 쉬움
+		var uy = Math.floor(num / 10) + 1
+		var ux = num % 10 + 1
+		console.log("user : " + ux + "," + uy)
+
+		var dist = (comx - ux) * (comx - ux) + (comy - uy) * (comy - uy)
+		dist = Math.sqrt(dist)
+		dist = Math.round(dist)
+		console.log("dist : " + dist)
+
+		var msg = ""
+		if (dist == 0)
+			msg = "금광을 찾았습니다"
+		else {
+			msg = "금광과의 거리 : " + dist
+		}
+		$("#result").html(msg)
+		this.innerHTML = "[ " + dist + " ]"
+		//누른 버튼은 비활성화 disabled=true
+		//this.disabled = true;
+		$(this).attr("disabled", true)
+
+		if (dist == 0) { //정답일 경우 추가적인 작업 한다.
+			//reset_game(); //게임초기화
+			$("#result").append("<br>게임이 종료 되었습니다.");
+		}
+	}
+
+	$(function() {
+		//버튼 100개 생성, 추가
+		var buttons = $("#buttons")
+		for (let i = 1; i <= 100; i++) {
+			buttons.append("<button>" + i + "</button>")
+		}
+
+		//버튼 100개에 클릭 이벤트 등록
+		$("#buttons>button").click(check_gold)
+
+	})
+</script>
+</head>
+<body>
+	<div id="wrapper">
+		<h1>금광찾기 게임</h1>
+		<p>컴퓨터가 정한 금광의 위치를 맞춰 보세요~</p>
+		<div id="result"></div>
+		<div id="buttons"></div>
+	</div>
+
+</body>
+</html>
+
+
+
+
+
