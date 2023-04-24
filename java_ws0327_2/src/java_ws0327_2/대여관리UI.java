@@ -18,7 +18,7 @@ public class 대여관리UI {
 		while(true) {
 			System.out.println("** 도서 대여 프로그램 v0.1 **");
 			System.out.println("[총등록수:" + rm.getTotalCount()+ "]");
-			System.out.println("1)도서등록 2)비디오등록 3)대여) 4)반납 5)전체출력 99)종료");
+			System.out.println("1)도서등록 2)비디오등록 3)대여) 4)반납 5)전체출력 6) 삭제 7)가격수정 99)종료");
 			System.out.print("메뉴번호> ");
 			int menu = Integer.parseInt(sc.next());
 			if(menu == 1)
@@ -31,11 +31,37 @@ public class 대여관리UI {
 				반납();
 			else if(menu == 5)
 				rm.printAll();
+			else if(menu == 6)
+				삭제();
+			else if(menu == 7)
+				수정();
 			else if(menu == 99)
 				break;
 			else
 				return;
 			}
+	}
+
+	private void 수정() {
+		System.out.print("가격 수정이 필요한 id> ");
+		int _id = Integer.parseInt(sc.next());
+		System.out.print("변경할 가격> ");
+		int price = Integer.parseInt(sc.next());
+		try {
+			rm.PriceUpdate(_id, price);
+		} catch (NotFoundException | InvalidTypeException e) {
+			System.err.println("가격수정에서 오류가 발생함");
+		}
+	}
+
+	private void 삭제() {
+		System.out.print("삭제할 비디오 번호> ");
+		int en = Integer.parseInt(sc.next());
+		try {
+			rm.delete(en);
+		} catch (NotFoundException e) {
+			System.err.println("삭제이상");
+		}
 	}
 
 	private void 반납() throws NotFoundException, InvalidTypeException {

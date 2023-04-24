@@ -28,6 +28,11 @@ public class Book extends Rental{
 	public String toString() {
 		return super.toString() +"author=" + author + ", page=" + page;
 	}
+
+	public void remove() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	
 }

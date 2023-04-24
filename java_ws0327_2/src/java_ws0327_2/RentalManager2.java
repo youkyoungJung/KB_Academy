@@ -23,6 +23,7 @@ public class RentalManager2 {
 	}
 	
 	public int getTotalCount() {
+		//System.out.println(map);
 		return map.size();
 	}
 	
@@ -113,9 +114,36 @@ public class RentalManager2 {
 			return;
 		}
 	}
+	//대여료 수정
+	public void PriceUpdate(int num, int price) throws NotFoundException, InvalidTypeException {
+		Rental rental = map.get(num);
+		if(rental ==  null) {
+			throw new NotFoundException(num);
+		}
+		Rental b = findByRental(num);
+		b.setPrice(price);
+		System.out.println("수정이 성공적으로 이루어짐");
+	}
 	
 	
-	
+	private Rental findByRental(int num) throws NotFoundException {
+		Rental rental = map.get(num);
+		if(rental ==  null) {
+			throw new NotFoundException(num);
+		}
+		return rental;
+	}
+
+	// 삭제
+	public void delete(int isbn) throws NotFoundException {
+		Collection<Rental> values = map.values();
+		for(Rental rental : values) {
+			if(rental.getNum() ==  isbn) {
+				values.remove(isbn);
+				System.out.println("삭제가 성공적으로 이루어짐");
+			}
+		}
+	}
 	 //전체출력
     public void printAll() {
 		System.out.println("***전체 출력***");
