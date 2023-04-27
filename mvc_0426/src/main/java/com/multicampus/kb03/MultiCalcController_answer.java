@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.multicampus.kb03.dto.MultiCalcDto;
+
 @Controller
 public class MultiCalcController_answer {
 
@@ -30,18 +32,32 @@ public class MultiCalcController_answer {
 		return "multi_calc_game_main";
 	}
 
+	/*
+	 * @RequestMapping(value = "/multi_calc_game_main", method = RequestMethod.POST)
+	 * public String multi_calc_game_main_post(Model model, @RequestParam(value =
+	 * "n1") int n1,
+	 * 
+	 * @RequestParam(value = "n2") int n2, @RequestParam(value = "ans") int ans,
+	 * HttpSession session) { Integer game_seq =
+	 * (Integer)session.getAttribute("game_seq"); game_seq += 1;
+	 * session.setAttribute("game_seq", game_seq); String result = n1 + " * " + n2 +
+	 * " = " + ans; System.out.println("result=" + result); if (n1 * n2 == ans) {
+	 * result += " 정답입니다"; } else { result += " 오답입니다.정답은 " + (n1 * n2); }
+	 * model.addAttribute("result", result); return multi_calc_game_main(model,
+	 * session); }
+	 */
+	
 	@RequestMapping(value = "/multi_calc_game_main", method = RequestMethod.POST)
-	public String multi_calc_game_main_post(Model model, @RequestParam(value = "n1") int n1,
-			@RequestParam(value = "n2") int n2, @RequestParam(value = "ans") int ans, HttpSession session) {
+	public String multi_calc_game_main_post(Model model, HttpSession session, MultiCalcDto dto) {
 		Integer game_seq = (Integer)session.getAttribute("game_seq");
 		game_seq += 1;
 		session.setAttribute("game_seq", game_seq);
-		String result = n1 + " * " + n2 + " = " + ans;
+		String result = dto.getN1() + " * " + dto.getN2() + " = " + dto.getAns();
 		System.out.println("result=" + result);
-		if (n1 * n2 == ans) {
+		if (dto.getN1() *  dto.getN2() ==  dto.getAns()) {
 			result += " 정답입니다";
 		} else {
-			result += " 오답입니다.정답은 " + (n1 * n2);
+			result += " 오답입니다.정답은 " + (dto.getN1() *  dto.getN2());
 		}
 		model.addAttribute("result", result);
 		return multi_calc_game_main(model, session);
