@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="config.BbsMapper">
+	<select id="selectAll" resultType="sp0427.dto.BbsDto">
+		select * from Bbs ORDER BY no
+		DESC
+	</select>
+
+	<select id="selectOne" resultType="sp0427.dto.BbsDto">
+		select * from Bbs where no =
+		#{no}
+	</select>
+
+	<select id="count" resultType="int">
+		select count(*) from Bbs
+	</select>
+
+	<insert id="insert" parameterType="sp0427.dto.BbsDto">
+		insert into Bbs(no, title,
+		writer_id, content, regdate)
+		values(bbs_seq.nextVal, #{title},
+		#{writer_id}, #{content}, sysdate)
+	</insert>
+	<!-- <select id="selectAll" resultType="mybatis.vo.MemberVo"> select * from 
+		Member ORDER BY mid </select> <insert id="insert"> insert into member(mid, 
+		mname, mpwd, mintro) values(#{mid}, #{mname}, #{mpwd}, #{mintro}) </insert> 
+		<update id="update"> update member set mid=#{mid}, mname=#{mname}, mpwd=#{mpwd}, 
+		mintro=#{mintro} where mid=#{mid} </update> <delete id="delete"> delete from 
+		member where mid=#{mid} </delete> -->
+</mapper>
