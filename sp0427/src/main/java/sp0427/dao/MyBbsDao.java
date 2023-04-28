@@ -12,17 +12,17 @@ import sp0427.dto.BbsDto;
 public class MyBbsDao {
 	@Autowired
 	private SqlSessionTemplate sst;
-	
-	public List<BbsDto> selectAll(){
+
+	public List<BbsDto> selectAll() {
 		return sst.selectList("selectAll");
 	}
+
 	public BbsDto selectOne(int no) {
 		return sst.selectOne("selectOne", no);
 	}
-	
+
 	public int count() {
 		return sst.selectOne("count");
 	}
 
 }
-

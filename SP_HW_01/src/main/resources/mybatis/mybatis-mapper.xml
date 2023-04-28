@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="config.CustomerMapper">
+	<select id="selectAll" resultType="com.itkbs.myapp.dto.CustomerDto">
+		select * from Customer ORDER
+		BY name
+		DESC
+	</select>
+
+	<select id="selectOne" resultType="com.itkbs.myapp.dto.CustomerDto">
+		select * from Customer where
+		email = #{email}
+	</select>
+
+	<select id="count" resultType="int">
+		select count(*) from Customer
+	</select>
+
+	<insert id="insert" parameterType="com.itkbs.myapp.dto.CustomerDto">
+		insert into Customer(name,
+		email,
+		phone, password)
+		values(#{name}, #{email},
+		#{phone}, #{password})
+	</insert>
+	
+	<update id="update" parameterType="com.itkbs.myapp.dto.CustomerDto">
+		update Customer set password=#{password} where email=#{email} 
+	</update>
+		
+	<!-- <select id="selectAll" resultType="mybatis.vo.MemberVo"> select * from 
+		Member ORDER BY mid </select> <insert id="insert"> insert into member(mid, 
+		mname, mpwd, mintro) values(#{mid}, #{mname}, #{mpwd}, #{mintro}) </insert> 
+		<update id="update"> update member set mid=#{mid}, mname=#{mname}, mpwd=#{mpwd}, 
+		mintro=#{mintro} where mid=#{mid} </update> <delete id="delete"> delete from 
+		member where mid=#{mid} </delete> -->
+</mapper>
